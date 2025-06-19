@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Signup from './pages/signup';
 import Login from './pages/login';
 import Layout from './components/Layout';
 import Button from '@mui/material/Button';
+import Employees from './pages/Employees';
+import Tasks from './pages/Tasks';
 
 function Home() {
   return (
@@ -32,8 +33,9 @@ export default function App() {
       <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/employees" element={<Employees />} />
+        <Route path="/tasks" element={<Tasks />} />
       </Routes>
       </Layout>
     </Router>

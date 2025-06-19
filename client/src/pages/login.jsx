@@ -20,8 +20,10 @@ export default function Login() {
     setError('');
     try {
       const res = await API.post('/auth/login', form);
+      console.log('Login response:', res.data);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('userRole', res.data.user.role);
+      localStorage.setItem('userEmail', res.data.user.email);
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');

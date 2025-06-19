@@ -5,6 +5,7 @@ import Layout from './components/Layout';
 import Button from '@mui/material/Button';
 import Employees from './pages/Employees';
 import Tasks from './pages/Tasks';
+import EmployeesDashboard from './pages/EmployeesDashboard';
 
 function Home() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/tasks" element={<Tasks />} />
+        <Route path="/dashboard" element={<EmployeesDashboard />} />
       </Routes>
       </Layout>
     </Router>

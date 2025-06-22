@@ -49,16 +49,27 @@ router.post('/signup', authenticate, requireAdmin, async (req, res) => {
 // Login
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
+  console.log('Login attempt:', { email });
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'Invalid credentials' });
+    if (!user) {
+      console.log('User not found');
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    console.log('User found:', user.email);
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+    if (!isMatch) {
+      console.log('Password mismatch');
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    console.log('Password match');
 
+    console.log('JWT_SECRET available:', !!JWT_SECRET);
     const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '1d' });
     res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
   } catch (err) {
+    console.error('Login error:', err);
     res.status(500).send(err.message);
   }
 });
@@ -90,5 +101,4 @@ router.get('/users', authenticate, requireAdmin, async (req, res) => {
   }
 });
 
-
-module.exports = router;
+module.exports = { router, authenticate, requireAdmin };

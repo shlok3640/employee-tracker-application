@@ -77,11 +77,11 @@ export default function Layout({ children }) {
                   </Button>
                   <Button
                     component={Link}
-                    to="/reports"
-                    color={isActive('/reports') ? 'primary' : 'inherit'}
-                    variant={isActive('/reports') ? 'contained' : 'text'}
+                    to="/screenshots-admin"
+                    color={isActive('/screenshots-admin') ? 'primary' : 'inherit'}
+                    variant={isActive('/screenshots-admin') ? 'contained' : 'text'}
                   >
-                    Reports
+                    View Screenshots
                   </Button>
                 </>
               )}

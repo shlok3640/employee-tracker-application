@@ -24,6 +24,8 @@ export default function Login() {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('userRole', res.data.user.role);
       localStorage.setItem('userEmail', res.data.user.email);
+      localStorage.setItem('userId', res.data.user.id);
+      
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');

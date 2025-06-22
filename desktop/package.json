@@ -1,8 +1,10 @@
 {
   "name": "desktop",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.js",
+  "type": "module",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -10,10 +12,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "electron": "^36.4.0",
+    "axios": "^1.7.2",
+    "electron": "^31.0.1",
     "electron-builder": "^26.0.12",
-    "electron-log": "^5.4.1",
-    "electron-store": "^10.1.0",
+    "electron-log": "^5.1.5",
+    "electron-store": "^7.0.3",
     "electron-updater": "^6.6.2"
   }
 }

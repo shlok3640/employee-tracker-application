@@ -12,9 +12,20 @@ export default function EmployeesDashboard() {
   const [totalActiveTime, setTotalActiveTime] = useState(0);
   const inactivityTimer = useRef(null);
   const lastActivity = useRef(Date.now());
+  const [isMonitoring, setIsMonitoring] = useState(false);
 
   // Start work handler
   const handleStartWork = () => {
+    if (window.electronAPI) {
+      const token = localStorage.getItem('token');
+      const user = { // We need to reconstruct the user object or store it whole
+        id: localStorage.getItem('userId'), // Assuming userId is stored on login
+        email: localStorage.getItem('userEmail'),
+        role: localStorage.getItem('userRole')
+      };
+      window.electronAPI.startMonitoring(token, user);
+      setIsMonitoring(true);
+    }
     setWorking(true);
     setWorkStart(Date.now());
     setWorkEnd(null);
@@ -26,6 +37,10 @@ export default function EmployeesDashboard() {
 
   // Stop work handler
   const handleStopWork = () => {
+    if (window.electronAPI) {
+      window.electronAPI.stopMonitoring();
+      setIsMonitoring(false);
+    }
     setWorking(false);
     setWorkEnd(Date.now());
     if (active) {
@@ -100,15 +115,22 @@ export default function EmployeesDashboard() {
   return (
     <Box sx={{ maxWidth: 500, mx: 'auto', mt: 6, p: 4, bgcolor: 'white', borderRadius: 2, boxShadow: 2 }}>
       <Typography variant="h4" fontWeight={700} mb={2}>Employee Dashboard</Typography>
-      {!working ? (
-        <Button variant="contained" color="primary" size="large" onClick={handleStartWork} fullWidth>
+      <div className="flex space-x-4">
+        <button 
+          onClick={handleStartWork}
+          disabled={isMonitoring}
+          className="px-4 py-2 bg-green-500 text-white rounded disabled:bg-gray-400"
+        >
           Start Work
-        </Button>
-      ) : (
-        <Button variant="contained" color="error" size="large" onClick={handleStopWork} fullWidth>
+        </button>
+        <button 
+          onClick={handleStopWork}
+          disabled={!isMonitoring}
+          className="px-4 py-2 bg-red-500 text-white rounded disabled:bg-gray-400"
+        >
           Stop Work
-        </Button>
-      )}
+        </button>
+      </div>
       <Box sx={{ mt: 4 }}>
         <Typography variant="h6">Work Status:</Typography>
         <Chip label={working ? (active ? 'Active' : 'Inactive') : 'Not Working'} color={working ? (active ? 'success' : 'warning') : 'default'} sx={{ fontWeight: 600, fontSize: 16, mt: 1 }} />
@@ -123,6 +145,9 @@ export default function EmployeesDashboard() {
           <Typography sx={{ fontSize: 14, color: 'gray' }}>Session ended: {new Date(workEnd).toLocaleTimeString()}</Typography>
         )}
       </Box>
+      {isMonitoring && (
+        <p className="mt-4 text-green-700">Monitoring is active. Screenshots are being taken every 30 seconds.</p>
+      )}
     </Box>
   );
 } 

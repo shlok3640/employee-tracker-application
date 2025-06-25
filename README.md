@@ -1,3 +1,6 @@
+> **Note:**  
+> The latest development and features (including SharePoint screenshot uploads) are available on the [`feature/upload-screenshots-to-sharepoint`](https://github.com/shlok3640/employee-tracker-application/tree/feature/upload-screenshots-to-sharepoint) branch.  
+> Please use this branch for the most recent updates and to contribute new features.
 # Employee Tracker Application
 
 A full-stack application for tracking employees, tasks, and monitoring activities, with admin and user roles. Built with a React frontend, Node.js/Express backend, MongoDB, and Electron desktop integration. Includes SharePoint integration for screenshot uploads.
